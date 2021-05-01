@@ -1,0 +1,37 @@
+.signin-btn{
+    margin-bottom: 10px;
+
+}
+
+body{
+    background-image: url("../img/NSU1.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+h1{
+   text-align: left;
+}
+
+.my-3{
+   background-color: white;
+   height: 680px;
+   width: 500px;
+   border: 1px;
+   background-repeat: no-repeat;
+   background-size: 80%;
+   border-radius: 20px;
+
+}
+
+.my-4{
+    background-color: white;
+    height: 880px;
+    width: 500px;
+    border: 1px;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    border-radius: 20px;
+    border-bottom-color: rgb(6, 139, 255);
+ 
+ }
