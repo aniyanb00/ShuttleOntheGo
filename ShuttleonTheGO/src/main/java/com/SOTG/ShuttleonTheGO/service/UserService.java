@@ -2,63 +2,50 @@ package com.SOTG.ShuttleonTheGO.service;
 
 import com.SOTG.ShuttleonTheGO.model.User;
 import com.SOTG.ShuttleonTheGO.repo.UserRepo;
-import com.SOTG.ShuttleonTheGO.view.LoginViewModel;
+import com.SOTG.ShuttleonTheGO.view.UserViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
 
+
     private final UserRepo userRepo;
 
     @Autowired
     public UserService(UserRepo userRepo) {
-
-
         this.userRepo = userRepo;
     }
 
     //Create User
-    public User addUser(User user){
+    @Transactional
+    public User addUser(UserViewModel user){
 
         User saveUser = new User();
+        saveUser.setF_name(user.getFirstName());
+        saveUser.setL_name(user.getLastName());
+        saveUser.setUsername(user.getUsername());
+        saveUser.setPassword(user.getPassword());
+        saveUser.setEmail(user.getEmail());
 
-        saveUser = userRepo.saveAndFlush(user);
+        if(user.getIsDriverStatus().equalsIgnoreCase("Driver")){
+            saveUser.setDriverStatus(true);
+        }
+        else{
+            saveUser.setDriverStatus(false);
+        }
 
-        return saveUser;
+        return userRepo.saveAndFlush(saveUser);
     }
 
-    //findUsername and Password
-    public User findbyUsernameandPassword(LoginViewModel loginViewModel){
+    public User findUser(String username){
+       return userRepo.findbyUsername(username);
 
-        User user = userRepo.findbyUsernameandPassword(loginViewModel.getUsername(), loginViewModel.getPassword()).orElseThrow(()->new IllegalArgumentException("Username and/or password incorrect"));
-
-        return user;
-    }
-
-
-    //getUserbyID
-    public Optional<User> findUserbyID(int id){
-       Optional<User> user = userRepo.findById(id);
-
-       if(!user.isPresent()){
-           throw new IllegalArgumentException("User id is not found ");
-       }
-
-       return user;
-
-    }
-
-    //update account
-    public User updateUser(User user){
-       return userRepo.save(user);
-    }
-
-    //delete account
-    public void deleteUser(int id){
-        userRepo.deleteById(id);
     }
 
 }

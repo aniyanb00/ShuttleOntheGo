@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<head>
+    <title>Request Page</title>
+</head>
+<body>
+<div class="container text-center">
+
+    <h1>Shuttle Request</h1>
+
+    <div id="map"></div>
+
+    <div class="container" style="position:relative; ">
+        <div class="row">
+            <div class="col">
+                <form action= "#" th:action = "@{/request}" th:object="${selectedRequest}" method="get">
+                    <div class="form-group w-50">
+                        <label for="selectstop" >Select Stop</label>
+                        <select th:field ="*{stopName} "class="form-control input-sm" id="selectstop">
+                            <option
+                                    th:each="stop : ${requestList}"
+                                    th:value = "${stop.getStop_name()}"
+                                    th:text = "${stop.getStop_name()}"
+                            ></option>
+                        </select>
+                    </div>
+                    <div class="border border-light p-3 mb-4">
+
+                        <div style="position: relative; padding-left: 100px;">
+                            <button th:onclick="|window.location.href ='/time'|" type="button" class="btn btn-primary" >Confirm</button>
+                        </div>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+    <script th:src="@{/js/map.js}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyAhbCbIlkZArac0yOQQ1el-oUh9BsWRv64" async defer ></script>
+
+</body>
+</html>

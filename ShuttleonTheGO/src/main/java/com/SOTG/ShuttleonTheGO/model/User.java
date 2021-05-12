@@ -1,14 +1,17 @@
 package com.SOTG.ShuttleonTheGO.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
+
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "user")
-public class User implements Serializable {
+public class User {
 
     //sign-in model
     //information that we need to sign in
@@ -16,24 +19,35 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int user_id;
 
-    @Column(name= "f_name", nullable = false)
+    @Column( nullable = false)
     private String f_name;
 
-    @Column(name="l_name",nullable = false)
+    @Column(nullable = false)
     private String l_name;
 
-    @Column(name="username",nullable = false,unique = true)
+    @Column(nullable = false,unique = true)
     private String username;
 
-    @Column(name="password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name="email",nullable = false)
+    @Column(nullable = false)
     private String email;
 
     @Column(name = "driver_status",columnDefinition = "TINYINT")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean driverStatus; //true for driver false for rider;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    private Set<Request> requestSet;
+
+    public Set<Request> getRequestSet() {
+        return requestSet;
+    }
+
+    public void setRequestSet(Set<Request> requestSet) {
+        this.requestSet = requestSet;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -96,11 +110,11 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return getUser_id() == user.getUser_id() && isDriverStatus() == user.isDriverStatus() && Objects.equals(getF_name(), user.getF_name()) && Objects.equals(getL_name(), user.getL_name()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getEmail(), user.getEmail());
+        return user_id == user.user_id && driverStatus == user.driverStatus && Objects.equals(f_name, user.f_name) && Objects.equals(l_name, user.l_name) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(requestSet, user.requestSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser_id(), getF_name(), getL_name(), getUsername(), getPassword(), getEmail(), isDriverStatus());
+        return Objects.hash(user_id, f_name, l_name, username, password, email, driverStatus, requestSet);
     }
 }

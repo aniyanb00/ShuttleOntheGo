@@ -1,27 +1,56 @@
 package com.SOTG.ShuttleonTheGO.view;
 
-public class LoginViewModel {
+import com.SOTG.ShuttleonTheGO.model.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-    private String username;
-    private String password;
+import java.util.Collection;
 
-    public String getUsername() {
-        return username;
+public class LoginViewModel implements UserDetails {
+
+    private User user;
+
+    public LoginViewModel(User user) {
+        this.user = user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
+    @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return user.getUsername();
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 
 }
+
+

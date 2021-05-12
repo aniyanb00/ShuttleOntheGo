@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Time</title>
+    <link rel="stylesheet"  th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container text-center">
+    <h3> ETA Of Driver</h3>
+
+    <p class = "alert-heading" Driver Accepted! Estimated Arrival Time ></p> <p class="alert-success" th:text="${time}"></p>
+</div>
+
+</body>
+</html>
