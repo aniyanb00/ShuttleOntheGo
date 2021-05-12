@@ -20,7 +20,7 @@ public class DistanceTime {
     @Autowired
     private RequestService requestService;
 
-    private static final String API_KEY="AIzaSyAhbCbIlkZArac0yOQQ1el-oUh9BsWRv64";
+    private static final String API_KEY= "removed key for security purpose";
     OkHttpClient client = new OkHttpClient();
 
 
